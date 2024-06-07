@@ -1,0 +1,47 @@
+# action.yml
+name: "Create a test run in the Qase TMS"
+description: "Create a test run in the Qase TMS."
+inputs:
+  token:
+    description: "Token for Qase API"
+    required: true
+  project:
+    description: "Project code in Qase"
+    required: true
+  title:
+    description: "Title of the test run"
+    required: true
+  description:
+    description: "Description of the test run"
+    required: false
+  environment:
+    description: "Environment slug of the test run"
+    required: false
+  milestone:
+    description: "Milestone ID of the test run"
+    required: false
+    default: "0"
+  plan:
+    description: "Plan ID of the test run"
+    required: false
+    default: "0"
+  verbose:
+    description: "Enable verbose output"
+    required: false
+    default: "false"
+outputs:
+  id:
+    description: "ID of the created test run"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.token }}
+    - ${{ inputs.project }}
+    - ${{ inputs.title }}
+    - ${{ inputs.description }}
+    - ${{ inputs.environment }}
+    - ${{ inputs.milestone }}
+    - ${{ inputs.plan }}
+    - ${{ inputs.verbose }}
