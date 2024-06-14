@@ -42,19 +42,18 @@ ID of the created environment.
 
 ```yaml
 steps:
-  - uses: actions/checkout@v3
-
-  - uses: qase-tms/gh-actions/env-create
-    id: env-create
+  - name: Create a Qase test environment
+    uses: qase-tms/gh-actions/env-create@v1
+    id: qase-env-create
     with:
       token: ${{ secrets.QASE_TOKEN }}
-      project: PRJ_CODE
+      project: CODE
       title: My Environment
-      slug: my-environment
+      slug: my-env
       description: My Environment Description
       host: my-environment.com
 
-  - name: Get environment ID
+  - name: Get Qase environment ID as env variable
     run: |
-      echo QASE_ENVIRONMENT=${{ steps.env-create.outputs.id }} >> $GITHUB_ENV
+      echo QASE_ENVIRONMENT=${{ steps.qase-env-create.outputs.id }} >> $GITHUB_ENV
 ```

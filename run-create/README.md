@@ -1,6 +1,6 @@
 # Create Test Run
 
-This action creates a new test run in Qase TMS and returns its ID.
+Create a new test run in Qase TMS and return its ID.
 
 ## Inputs
 
@@ -14,23 +14,25 @@ This action creates a new test run in Qase TMS and returns its ID.
 
 ### title
 
-**Required**. Title of the test run.
+**Required**. Test run title. 
 
 ### description
 
-Description of the test run.
+Test run description, shown on the test run page.
+Markdown formatting is supported in descriptions.
 
 ### environment
 
-Environment of the test run (slug). For example, 'dev', 'feature-123', 'production'
+Qase test environment to use for a new test run.
+For example, 'dev', 'feature-123', 'production'
 
 ### milestone
 
-Milestone of the test run, specified by ID.
+Qase milestone to use for a new test run, specified by ID.
 
 ### plan
 
-Plan of the test run, specified by ID.
+Qase test plan to use for a new test run, specified by ID.
 
 ### verbose
 
@@ -46,21 +48,21 @@ ID of the created test run.
 
 ```yaml
 steps:
-  - uses: actions/checkout@v3
-
   - uses: qase-tms/gh-actions/run-create
-    id: create
+    id: qase-run-create
     with:
       token: ${{ secrets.QASE_TOKEN }}
-      project: PRJ_CODE
+      project: CODE
       title: Test Run Title
-      description: Test Run Description
+      description: |
+        Test Run Description
+        Use multiline text and [markdown formatting](https://example.com)
       environment: my-env
       milestone: 123
       plan: 321
 
   - name: Run tests
     run: |
-      echo QASE_TESTOPS_RUN_ID=${{ steps.create.outputs.id }} >> $GITHUB_ENV
+      echo QASE_TESTOPS_RUN_ID=${{ steps.qase-run-create.outputs.id }} >> $GITHUB_ENV
       # Run tests here  
 ```

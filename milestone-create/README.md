@@ -1,6 +1,6 @@
-# Create Environment
+# Create Milestone
 
-This action creates a new environment in Qase TMS and returns its ID.
+This action creates a new milestone in Qase TMS and returns its ID.
 
 ## Inputs
 
@@ -14,19 +14,20 @@ This action creates a new environment in Qase TMS and returns its ID.
 
 ### title
 
-**Required**. Title of the environment.
-
-### slug
-
-**Required**. Slug of the environment.
+**Required**. Title of the milestone.
 
 ### description
 
-Description of the environment.
+Description of the milestone.
+Markdown formatting is supported in descriptions.
 
-### host
+### status
 
-Host of the environment.
+Status of the milestone. Allowed values: active, completed
+
+### due_date
+
+Due date of the milestone. Format: YYYY-MM-DD
 
 ### verbose
 
@@ -36,25 +37,24 @@ Verbose mode. Default: false.
 
 ### id
 
-ID of the created environment.
+ID of the created milestone.
 
 ## Example usage
 
 ```yaml
 steps:
-  - uses: actions/checkout@v3
-
-  - uses: qase-tms/gh-actions/env-create
-    id: env-create
+  - name: Create a Qase milestone
+    uses: qase-tms/gh-actions/milestone-create@v1
+    id: qase-milestone-create
     with:
       token: ${{ secrets.QASE_TOKEN }}
-      project: PRJ_CODE
-      title: My Environment
-      slug: my-environment
-      description: My Environment Description
-      host: my-environment.com
+      project: CODE
+      title: Release 1.0.0
+      description: Preparing product release 1.0.0
+      due_date: 2048-02-24
+      status: active
 
-  - name: Get environment ID
+  - name: Get milestone ID as an env variable
     run: |
-      echo QASE_ENVIRONMENT=${{ steps.env-create.outputs.id }} >> $GITHUB_ENV
+      echo QASE_MILESTONE=${{ steps.qase-milestone-create.outputs.id }} >> $GITHUB_ENV
 ```
