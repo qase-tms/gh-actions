@@ -1,0 +1,43 @@
+# action.yml
+name: "Report test results to Qase TMS"
+description: "Report test results to Qase TMS. Supports JUnit, Qase, XCtest and Allure formats."
+inputs:
+  token:
+    description: "Token for Qase API"
+    required: true
+  project:
+    description: "Project code in Qase"
+    required: true
+  id:
+    description: "ID of the test run to report results to"
+    required: true
+  format:
+    description: "Format of the test results. Allowed values: junit, qase, xctest, allure"
+    required: true
+  path:
+    description: "Path to the test results file or directory"
+    required: true
+  batch:
+    description: "Batch size of the test results. Default: 20"
+    required: false
+    default: "20"
+  steps:
+    description: "Steps show mode in XCTest. Allowed values: all, user"
+    required: false
+  verbose:
+    description: "Enable verbose output"
+    required: false
+    default: "false"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.token }}
+    - ${{ inputs.project }}
+    - ${{ inputs.id }}
+    - ${{ inputs.format }}
+    - ${{ inputs.path }}
+    - ${{ inputs.batch }}
+    - ${{ inputs.steps }}
+    - ${{ inputs.verbose }}
