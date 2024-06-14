@@ -1,6 +1,6 @@
 # Complete Test Run
 
-This action completes a test run in Qase TMS and returns its ID.
+Complete a test run in Qase TMS.
 
 ## Inputs
 
@@ -30,12 +30,10 @@ ID of the completed test run.
 
 ```yaml
 steps:
-  - uses: actions/checkout@v3
-
   - uses: qase-tms/gh-actions/run-complete
     id: complete
     with:
       token: ${{ secrets.QASE_TOKEN }}
-      project: PRJ_CODE
-      id: ${{ steps.create.outputs.id }}
+      project: CODE
+      id: ${{ steps.qase-run-create.outputs.id }}
 ```

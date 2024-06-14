@@ -18,7 +18,7 @@ inputs:
     description: "Status of the milestone. Allowed values: active, completed"
     required: false
   due_date:
-    description: "Duu date of the milestone. Format: YYYY-MM-DD"
+    description: "Due date of the milestone. Format: YYYY-MM-DD"
     required: false
   verbose:
     description: "Enable verbose output"

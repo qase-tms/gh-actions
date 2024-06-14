@@ -1,7 +1,6 @@
 # Report
 
-This action reports test results to Qase TMS. It can be used to report results of a single test or a batch of tests.
-Allowed formats are JUnit, Qase, XCTest and Allure.
+Report test results to Qase TMS from JUnit, Qase, XCTest and Allure test reports.
 
 ## Inputs
 
@@ -41,15 +40,14 @@ Verbose mode. Default: false.
 
 ```yaml
 steps:
-  - uses: actions/checkout@v3
-
-  - uses: qase-tms/gh-actions/report
+  - uses: qase-tms/gh-actions/report@v1
     id: report
     with:
       token: ${{ secrets.QASE_TOKEN }}
-      project: PRJ_CODE
-      id: ${{ steps.create.outputs.id }}
+      project: CODE
+      # create a test run using qase-tms/gh-actions/run-create
+      id: ${{ steps.qase-run-create.outputs.id }}
       format: junit
       path: test-results.xml
-      batch: 10
+      batch: 100
 ```
