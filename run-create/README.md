@@ -46,9 +46,12 @@ ID of the created test run.
 
 ## Example usage
 
+Full workflow with creating and completing a test run:
+
 ```yaml
 steps:
-  - uses: qase-tms/gh-actions/run-create
+  - name: Create a Qase test run
+    uses: qase-tms/gh-actions/run-create
     id: qase-run-create
     with:
       token: ${{ secrets.QASE_TOKEN }}
@@ -62,7 +65,22 @@ steps:
       plan: 321
 
   - name: Run tests
+    env:
+      QASE_TESTOPS_PROJECT: CODE
+      QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TOKEN }}
+      QASE_TESTOPS_RUN_ID: ${{ steps.qase-run-create.outputs.id }}
     run: |
-      echo QASE_TESTOPS_RUN_ID=${{ steps.qase-run-create.outputs.id }} >> $GITHUB_ENV
       # Run tests here  
+
+    
+  - name: Complete a Qase test run
+    uses: qase-tms/gh-actions/run-complete
+    id: complete
+    # use always() to run even if test step failed or job was canceled
+    # but don't run if creating a test run failed before this step
+    if: always() && steps.qase-run-create.result == 'success'
+    with:
+      token: ${{ secrets.QASE_TOKEN }}
+      project: CODE
+      id: ${{ steps.qase-run-create.outputs.id }}
 ```

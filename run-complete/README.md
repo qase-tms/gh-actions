@@ -30,10 +30,13 @@ ID of the completed test run.
 
 ```yaml
 steps:
-  - uses: qase-tms/gh-actions/run-complete
+  - name: Complete a Qase test run
+    uses: qase-tms/gh-actions/run-complete
     id: complete
+    if: always()
     with:
       token: ${{ secrets.QASE_TOKEN }}
       project: CODE
       id: ${{ steps.qase-run-create.outputs.id }}
 ```
+
