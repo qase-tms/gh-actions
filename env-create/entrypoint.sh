@@ -16,12 +16,19 @@ if [ "$VERBOSE" == "true" ]; then
     DEBUG="--verbose"
 fi
 
-echo $SLUG
+# Check if the command line tools are installed
+if command -v qli &> /dev/null; then
+  CMD="qli"
+elif command -v qasectl &> /dev/null; then
+  CMD="qasectl"
+else
+  echo "Can not found executable qli or qasectl"
+  exit 1
+fi
 
 # Create the environment by running the Qase CLI
-qli testops env create -t "$TOKEN" -p "$PROJECT" --title "$TITLE" --slug "$SLUG" \
+"$CMD" testops env create -t "$TOKEN" -p "$PROJECT" --title "$TITLE" --slug "$SLUG" \
  --description "$DESCRIPTION" --host "$HOST" $DEBUG
-
 
 # Get the slug of the created environment and write it to the output
 ENV_SLUG=$(< qase.env grep QASE_ENVIRONMENT | cut -d'=' -f2)

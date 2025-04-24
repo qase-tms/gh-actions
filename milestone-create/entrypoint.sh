@@ -16,10 +16,19 @@ if [ "$VERBOSE" == "true" ]; then
     DEBUG="--verbose"
 fi
 
-# Create the milestone by running the Qase CLI
-qli testops milestone create -t "$TOKEN" -p "$PROJECT" --title "$TITLE" --description "$DESCRIPTION" --status "$STATUS" \
- --due-date "$DUE_DATE" $DEBUG
+# Check if the command line tools are installed
+if command -v qli &> /dev/null; then
+  CMD="qli"
+elif command -v qasectl &> /dev/null; then
+  CMD="qasectl"
+else
+  echo "Can not found executable qli or qasectl"
+  exit 1
+fi
 
+# Create the milestone by running the Qase CLI
+"$CMD" testops milestone create -t "$TOKEN" -p "$PROJECT" --title "$TITLE" --description "$DESCRIPTION" --status "$STATUS" \
+ --due-date "$DUE_DATE" $DEBUG
 
 # Get the ID of the created milestone and write it to the output
 MS_ID=$(< qase.env grep QASE_MILESTONE | cut -d'=' -f2)
