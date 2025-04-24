@@ -17,8 +17,18 @@ if [ "$VERBOSE" == "true" ]; then
     DEBUG="--verbose"
 fi
 
+# Check if the command line tools are installed
+if command -v qli &> /dev/null; then
+  CMD="qli"
+elif command -v qasectl &> /dev/null; then
+  CMD="qasectl"
+else
+  echo "Can not found executable qli or qasectl"
+  exit 1
+fi
+
 # Create the test run by running the Qase CLI
-qli testops run create -t "$TOKEN" -p "$PROJECT" --title "$TITLE" --description "$DESCRIPTION" \
+"$CMD" testops run create -t "$TOKEN" -p "$PROJECT" --title "$TITLE" --description "$DESCRIPTION" \
   --environment "$ENVIRONMENT" --milestone "$MILESTONE" --plan "$PLAN" $DEBUG
 
 
