@@ -3,8 +3,8 @@ name: "Report test results to Qase TMS"
 description: "Report test results to Qase TMS. Supports JUnit, Qase, XCtest and Allure formats."
 inputs:
   token:
-    description: "Token for Qase API"
-    required: true
+    description: "Token for Qase API. If not provided, the QASE_TESTOPS_API_TOKEN environment variable will be used."
+    required: false
   project:
     description: "Project code in Qase"
     required: true

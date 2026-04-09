@@ -6,7 +6,8 @@ Complete a test run in Qase TMS.
 
 ### token
 
-**Required**. Qase API token. You can get it in your account settings.
+Qase API token. You can get it in your account settings.
+If not provided, the `QASE_TESTOPS_API_TOKEN` environment variable will be used.
 
 ### project
 
@@ -28,6 +29,8 @@ ID of the completed test run.
 
 ## Example usage
 
+### Using token input
+
 ```yaml
 steps:
   - name: Complete a Qase test run
@@ -36,6 +39,22 @@ steps:
     if: always()
     with:
       token: ${{ secrets.QASE_TOKEN }}
+      project: CODE
+      id: ${{ steps.qase-run-create.outputs.id }}
+```
+
+### Using environment variable
+
+```yaml
+env:
+  QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TOKEN }}
+
+steps:
+  - name: Complete a Qase test run
+    uses: qase-tms/gh-actions/run-complete
+    id: complete
+    if: always()
+    with:
       project: CODE
       id: ${{ steps.qase-run-create.outputs.id }}
 ```

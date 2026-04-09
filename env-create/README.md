@@ -6,7 +6,8 @@ This action creates a new environment in Qase TMS and returns its ID.
 
 ### token
 
-**Required**. Qase API token. You can get it in your account settings.
+Qase API token. You can get it in your account settings.
+If not provided, the `QASE_TESTOPS_API_TOKEN` environment variable will be used.
 
 ### project
 
@@ -40,6 +41,8 @@ ID of the created environment.
 
 ## Example usage
 
+### Using token input
+
 ```yaml
 steps:
   - name: Create a Qase test environment
@@ -56,4 +59,22 @@ steps:
   - name: Get Qase environment ID as env variable
     run: |
       echo QASE_ENVIRONMENT=${{ steps.qase-env-create.outputs.id }} >> $GITHUB_ENV
+```
+
+### Using environment variable
+
+```yaml
+env:
+  QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TOKEN }}
+
+steps:
+  - name: Create a Qase test environment
+    uses: qase-tms/gh-actions/env-create@v1
+    id: qase-env-create
+    with:
+      project: CODE
+      title: My Environment
+      slug: my-env
+      description: My Environment Description
+      host: my-environment.com
 ```

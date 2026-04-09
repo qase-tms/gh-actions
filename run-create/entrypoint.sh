@@ -3,7 +3,11 @@
 set -e
 
 # Required parameters
-TOKEN=$1
+TOKEN=${1:-$QASE_TESTOPS_API_TOKEN}
+if [ -z "$TOKEN" ]; then
+  echo "Error: token is required. Provide it as an input or set the QASE_TESTOPS_API_TOKEN environment variable."
+  exit 1
+fi
 PROJECT=$2
 TITLE=$3
 DESCRIPTION=$4

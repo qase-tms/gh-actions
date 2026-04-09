@@ -6,7 +6,8 @@ Create a new test run in Qase TMS and return its ID.
 
 ### token
 
-**Required**. Qase API token. You can get it in your account settings.
+Qase API token. You can get it in your account settings.
+If not provided, the `QASE_TESTOPS_API_TOKEN` environment variable will be used.
 
 ### project
 
@@ -46,6 +47,8 @@ ID of the created test run.
 
 ## Example usage
 
+### Using token input
+
 Full workflow with creating and completing a test run:
 
 ```yaml
@@ -72,7 +75,6 @@ steps:
     run: |
       # Run tests here  
 
-    
   - name: Complete a Qase test run
     uses: qase-tms/gh-actions/run-complete
     id: complete
@@ -81,6 +83,43 @@ steps:
     if: always() && steps.qase-run-create.result == 'success'
     with:
       token: ${{ secrets.QASE_TOKEN }}
+      project: CODE
+      id: ${{ steps.qase-run-create.outputs.id }}
+```
+
+### Using environment variable
+
+Set `QASE_TESTOPS_API_TOKEN` once at the workflow level, and all actions will use it automatically:
+
+```yaml
+env:
+  QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TOKEN }}
+
+steps:
+  - name: Create a Qase test run
+    uses: qase-tms/gh-actions/run-create
+    id: qase-run-create
+    with:
+      project: CODE
+      title: Test Run Title
+      description: |
+        Test Run Description
+      environment: my-env
+      milestone: 123
+      plan: 321
+
+  - name: Run tests
+    env:
+      QASE_TESTOPS_PROJECT: CODE
+      QASE_TESTOPS_RUN_ID: ${{ steps.qase-run-create.outputs.id }}
+    run: |
+      # Run tests here  
+
+  - name: Complete a Qase test run
+    uses: qase-tms/gh-actions/run-complete
+    id: complete
+    if: always() && steps.qase-run-create.result == 'success'
+    with:
       project: CODE
       id: ${{ steps.qase-run-create.outputs.id }}
 ```
