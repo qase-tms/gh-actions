@@ -6,7 +6,8 @@ Report test results to Qase TMS from JUnit, Qase, XCTest and Allure test reports
 
 ### token
 
-**Required**. Qase API token. You can get it in your account settings.
+Qase API token. You can get it in your account settings.
+If not provided, the `QASE_TESTOPS_API_TOKEN` environment variable will be used.
 
 ### project
 
@@ -38,6 +39,8 @@ Verbose mode. Default: false.
 
 ## Example usage
 
+### Using token input
+
 ```yaml
 steps:
   - uses: qase-tms/gh-actions/report@v1
@@ -46,6 +49,23 @@ steps:
       token: ${{ secrets.QASE_TOKEN }}
       project: CODE
       # create a test run using qase-tms/gh-actions/run-create
+      id: ${{ steps.qase-run-create.outputs.id }}
+      format: junit
+      path: test-results.xml
+      batch: 100
+```
+
+### Using environment variable
+
+```yaml
+env:
+  QASE_TESTOPS_API_TOKEN: ${{ secrets.QASE_TOKEN }}
+
+steps:
+  - uses: qase-tms/gh-actions/report@v1
+    id: report
+    with:
+      project: CODE
       id: ${{ steps.qase-run-create.outputs.id }}
       format: junit
       path: test-results.xml
