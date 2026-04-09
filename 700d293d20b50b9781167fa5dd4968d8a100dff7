@@ -1,0 +1,53 @@
+milestone-create/action.yaml
+  a442d610e45183e4 6-7
+run-create/action.yaml
+  a442d610e45183e4 6-7
+report/README.md
+  a442d610e45183e4 9-10,42-43,57-68
+env-create/action.yaml
+  a442d610e45183e4 6-7
+milestone-create/entrypoint.sh
+  a442d610e45183e4 6-10
+milestone-create/README.md
+  a442d610e45183e4 9-10,45-46,64-80
+env-create/README.md
+  a442d610e45183e4 9-10,44-45,63-79
+report/entrypoint.sh
+  a442d610e45183e4 6-10
+readme.md
+  a442d610e45183e4 7-28
+report/action.yaml
+  a442d610e45183e4 6-7
+run-complete/entrypoint.sh
+  a442d610e45183e4 6-10
+run-create/README.md
+  a442d610e45183e4 9-10,50-51,89-122
+env-create/entrypoint.sh
+  a442d610e45183e4 6-10
+run-complete/action.yaml
+  a442d610e45183e4 6-7
+run-create/entrypoint.sh
+  a442d610e45183e4 6-10
+run-complete/README.md
+  a442d610e45183e4 9-10,32-33,46-57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.6",
+  "base_commit_sha": "700d293d20b50b9781167fa5dd4968d8a100dff7",
+  "prompts": {
+    "a442d610e45183e4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "93d87663-8c46-4578-9e55-7411407fd0a5",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Dmitrii Gridnev",
+      "messages": [],
+      "total_additions": 223,
+      "total_deletions": 22,
+      "accepted_lines": 223,
+      "overriden_lines": 0
+    }
+  }
+}
